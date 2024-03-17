@@ -1,0 +1,44 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body class="h-full grid grid-rows-[4rem_auto]">
+    <%- include('../includes/navigation.ejs') %>
+
+    <main class="max-w-full bg-slate-600 h-full">
+        <section class="max-w-6xl px-10 sm:px-2 md:px-3 lg:px-0 mx-auto">
+            <div class="grid w-full gap-1 h-full md:grid-cols-4 sm:grid-cols-3 items-center grid-cols-1">
+                <% if (prods.length > 0) { %>
+                    
+                        <% for (let product of prods) { %>
+            
+                            <article class="flex flex-col items-center bg-slate-800 my-1 rounded-xl text-white justify-center">
+                                <header class="mb-2">
+                                    <h1 class="text-2xl sm:text-3xl"><%= product.title %></h1>
+                                </header>
+                                <div>
+                                    <img class="h-[200px] w-[300px]" src='<%= product.imageurl %>'
+                                    alt="<%= product.title %>">
+                                </div>
+                                <div class="flex flex-col items-start text-2xl sm:text-3xl px-5 w-full mt-1 space-y-[1px]">
+                                    <h2 class="text-zinc-900 hover:text-white" >$<%= product.price %></h2>
+                                    <p class="text-[1.2rem]"><%= product.description %></p>
+                                </div>
+                                <div class="my-1 flex space-x-2">
+                                        <a href="/products/<%= product.id %>" class="bg-slate-950 rounded-2xl py-1 px-2 hover:bg-white hover:text-slate-950 cursor-pointer">Details</a>
+                                        <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+                                </div>
+                            </article>
+            
+                            
+                        <% } %>
+                    
+                <% } else { %>
+                    <h1 class="text-slate-950 col-span-full text-center pt-10 text-3xl">No Products Found!</h1>
+                <% } %>
+                
+                
+                
+            </div>
+        </section>
+    </main>
+<%- include('../includes/end.ejs') %>

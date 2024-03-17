@@ -1,0 +1,43 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body class="h-full grid grid-rows-[4rem_auto]">
+    <%- include('../includes/navigation.ejs') %>
+    <main class="max-w-full bg-slate-600 h-full">
+        <section class="max-w-6xl  px-2 grid gap-4 grid-cols-1 sm:grid-cols-[70%_auto] sm:px-2 md:px-3 lg:px-0 mx-auto">
+            <div class=" flex flex-col space-y-4 p-1">
+                <% if (prods.length > 0) { %>
+                    
+                    <% for (let product of prods) { %>
+        
+                        <article class="px-4 py-2 items-center flex justify-between sm:space-x-16 bg-slate-800 text-white rounded-2xl">
+                            <div class="flex flex-col space-y-2">
+                                <h1 class=" text-3xl"><%= product.product_title %></h1>
+                                <h2 class="text-xl text-[#ccc]" >$<%= product.product_price %></h2>
+                            </div>
+                        
+                            <div>
+                                <h2 class="text-2xl">quantity: <%= product.quantity %></h2>
+                            </div>
+                            
+                            <form action="/cart-delete-item" method="POST">
+                                <input type="hidden" value="<%= product.id %>" name="productId">
+                                <button class="bg-slate-950 rounded-2xl py-2 px-3 hover:bg-white hover:text-slate-950 cursor-pointer" type="submit">Delete</button>
+                            </form>
+                        </article>
+        
+                        
+                    <% } %>
+               
+            <% } else { %>
+                <h1 class="text-slate-950 text-center py-1 font-bold text-3xl">Cart Empty!</h1>
+            <% } %>
+            </div>
+            <div class="row-span-1 text-xl sm:text-2xl p-2 font-extrabold">
+                <h1 class="bg-slate-950 text-white rounded-lg p-4">Total amount: $<%= totalCartPrice %></h1>
+            </div>
+        </section>
+    </main>
+   
+
+<%- include('../includes/end.ejs') %>

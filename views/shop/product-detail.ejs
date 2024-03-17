@@ -1,0 +1,19 @@
+<%- include('../includes/head.ejs') %>
+    </head>
+
+    <body class="h-full grid grid-rows-[4rem_auto]">
+        <%- include('../includes/navigation.ejs') %>
+    
+        <main class="max-w-full bg-slate-600 h-full">
+            <section class="max-w-lg bg-slate-900 h-full text-white flex flex-col items-center justify-center space-y-4 p-10 rounded-3xl mx-auto">
+
+                <h1 class="text-3xl mb-2"><%= product.title %></h1>
+                <div>
+                    <img src="<%= product.imageurl %>" alt="<%= product.title %>">
+                </div>
+                <h2 class="text-2xl my-1">$<%= product.price %></h2>
+                <p  class="text-xl mb-2"><%= product.description %></p>
+                <%- include('../includes/add-to-cart.ejs') %>
+            </section>
+        </main>
+        <%- include('../includes/end.ejs') %>
