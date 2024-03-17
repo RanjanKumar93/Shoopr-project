@@ -9,7 +9,7 @@ const app = express();
 const port = 3000;
 
 app.set("view engine", "ejs");
-app.set("views", "views");
+app.set("views", path.resolve("./views"));
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
