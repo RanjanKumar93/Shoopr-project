@@ -64,8 +64,12 @@ exports.postEditProduct = async (req, res, next) => {
     const updatedImageUrl = req.body.imageUrl;
     const updatedDesc = req.body.description;
     await sql`UPDATE products SET title = ${updatedTitle} , price = ${updatedPrice} , imageurl = ${updatedImageUrl} , description = ${updatedDesc} WHERE id = ${prodId}`;
-    await sql`UPDATE cart SET product_title = ${updatedTitle} , product_price = ${updatedPrice}  WHERE products_id = ${prodId}`,
-      res.redirect("/admin/products");
+    const cartProduct =
+      await sql`SELECT id FROM cart WHERE products_id = ${prodId}`;
+    if (cartProduct.length > 0) {
+      await sql`UPDATE cart SET product_title = ${updatedTitle} , product_price = ${updatedPrice}  WHERE products_id = ${prodId}`;
+    }
+    res.redirect("/admin/products");
   } catch (err) {
     console.log(err);
   }
@@ -74,7 +78,12 @@ exports.postEditProduct = async (req, res, next) => {
 exports.postDeleteProduct = async (req, res, next) => {
   try {
     const prodId = req.body.productId;
-    await sql`DELETE FROM cart WHERE products_id = ${prodId}`;
+
+    const cartProduct =
+      await sql`SELECT id FROM cart WHERE products_id = ${prodId}`;
+    if (cartProduct.length > 0) {
+      await sql`DELETE FROM cart WHERE products_id = ${prodId}`;
+    }
     await sql`DELETE FROM products WHERE id = ${prodId}`;
     res.redirect("/admin/products");
   } catch (err) {
